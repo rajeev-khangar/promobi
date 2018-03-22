@@ -9,4 +9,5 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :projects_users, allow_destroy: true, reject_if: proc {|attributes| attributes['user_id'].to_i == 0}  
 
   default_scope { order(created_at: :asc) }
+
 end

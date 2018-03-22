@@ -1,0 +1,70 @@
+<%- model_class = Task -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:project_id) %></th>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:status) %></th>
+      <th><%= model_class.human_attribute_name(:assigned_at) %></th>
+      <th><%= model_class.human_attribute_name(:started_at) %></th>
+      <th><%= model_class.human_attribute_name(:completed_at) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= link_to task.id, project_task_path(@project, task) %></td>
+        <td><%= link_to task.title, project_task_path(@project, task) %></td>
+        <td><%= task.description %></td>
+        <td><%= task.project.title %></td>
+        <td><%= task.user_id %></td>
+        <td><%= task.status %></td>
+        <td><%= task.assigned_at.try(:to_date) %></td>
+        <td><%= task.started_at.try(:to_date) %></td>
+        <td><%= task.completed_at.try(:to_date) %></td>
+        <td><%=l task.created_at.try(:to_date) %></td>
+        <td>
+          <% if can? :show, Task %>
+            <%= link_to t('.show', :default => t("helpers.links.show")),
+                        project_task_path(@project, task), :class => 'btn btn-default btn-xs' %>
+          <% end %>
+
+          <% if can? :crud, Task %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_project_task_path(@project, task), :class => 'btn btn-default btn-xs' %>
+
+            <%= link_to t("helpers.links.destroy"),
+                        project_task_path(@project, task),
+                        :method => :delete,
+                        :data => { confirm: 'Are you sure?' },
+                        :class => 'btn btn-xs btn-danger' %>
+          <% end %>
+          <% if current_user.developer? %>
+            <%= select_tag :status,
+              options_for_select(Task.aasm.states.map(&:name), selected: task.status),
+              class: "chosen-select", prompt: "Change Status", data: {path: change_status_project_task_path(@project, task)} %>
+          <% end %>
+
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              projects_path, :class => 'btn btn-default'  %>
+
+<% if can? :crud, Task %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_project_task_path,
+            :class => 'btn btn-primary' %>              
+<% end %>

@@ -36,6 +36,12 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'cancancan', '~> 2.0'
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+gem "cocoon"
+gem 'aasm'
+gem 'will_paginate'
+gem 'haml'
+gem 'chartjs-ror'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

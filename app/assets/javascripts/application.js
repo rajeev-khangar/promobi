@@ -13,6 +13,8 @@
 //= require jquery3
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require cocoon
 //= require rails-ujs
 //= require turbolinks
+//= require Chart.min
 //= require_tree .

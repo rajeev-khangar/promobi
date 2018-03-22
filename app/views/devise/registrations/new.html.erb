@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="i-box">
+    <div class="col-md-12">
+      <h2>SignUp</h2>
+      <br/> 
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+          <div class="row">  
+            <div class="col-md-6">
+            <%= f.label :first_name %>
+              <%= f.text_field :first_name, icon: "user", placeholder: "User first name", class: "form-control" %>
+            </div>
+            <div class="col-md-6">
+            <%= f.label :last_name %>
+              <%= f.text_field :last_name, icon: "user", placeholder: "User last name", class: "form-control" %>
+            </div>
+          </div>
+          <br/>
+          <div class="row">  
+            <div class="col-md-6">
+             <%= f.label :email %>
+             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            </div>
+          </div>
+          <br/> 
+          <div class="row">  
+            <div class="col-md-6">
+            <%= f.label :password %>
+              <%= f.password_field :password, autocomplete: "off", placeholder: "password", class: "form-control" %>
+            </div> 
+            <div class="col-md-6">
+            <%= f.label :password_confirmation %>
+              <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm password", class: "form-control" %>
+            </div> 
+          </div> 
+          <br/>   
+          <div class="row">
+            <div class="col-lg-8 ">
+              <%= f.submit "create account", class: " btn btn-success btn-lg btn-block" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

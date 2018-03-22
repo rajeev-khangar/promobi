@@ -1,0 +1,40 @@
+- if user_signed_in? && current_user.admin?
+  .container
+    .col-md-12
+    - @projects.each do |project|
+      %h2= "#{project.title}"
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Status
+            - users = project.users
+            - users.each do |user|
+              %th
+                = user.full_name
+        %tbody
+          %tr
+            %td Completed
+            - users.each do |user|
+              %td
+                - user.tasks.completed.each_with_index do |task, index|
+                  = "#{index+1}.  #{task.title}"
+                  %br/
+          %tr
+            %td In-Progress
+            - users.each do |user|
+              %td
+                - user.tasks.in_progress.each_with_index do |task, index|
+                  = "#{index+1}.  #{task.title}"              
+          %tr
+            %td Not Started
+            - users.each do |user|
+              %td
+                - user.tasks.not_started.each_with_index do |task, index|
+                  = "#{index+1}.  #{task.title}"
+                  %br/
+      .row
+        .col-md-6
+          = chartjs_pie_chart(pie_chart_by(project.tasks), {legend: {display: true, position: "right"}, maintainAspectRatio: false, height: 200})
+
+            
+    = will_paginate @projects            
